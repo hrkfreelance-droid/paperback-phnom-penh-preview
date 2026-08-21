@@ -1,0 +1,669 @@
+<title>Paperback Phnom Penh</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f1e8;
+    --paper-deep:#ece5d4;
+    --ink:#15140f;
+    --ink-soft:#57534a;
+    --rule:#d8d0bc;
+    --mark:#7c2c1f;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--paper)}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+
+  .serif{ font-family:"Libre Baskerville","Baskerville Old Face",Baskerville,Georgia,serif; }
+
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  .eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  .hair{border:none;border-top:1px solid var(--rule)}
+
+  /* grain texture used on all plates */
+  .plate{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 12% 8%, #2c2a22 0%, transparent 55%),
+      radial-gradient(140% 120% at 90% 90%, #3a3529 0%, transparent 60%),
+      linear-gradient(155deg, #1c1a15 0%, #33301f 45%, #4a4634 75%, #6b6650 100%);
+  }
+  .plate::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+    mix-blend-mode:overlay;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .plate.warm{
+    background:
+      radial-gradient(120% 140% at 85% 10%, #55432c 0%, transparent 55%),
+      radial-gradient(140% 120% at 10% 95%, #23201a 0%, transparent 60%),
+      linear-gradient(160deg, #efe6cf 0%, #b7a883 35%, #4a4230 70%, #1a1712 100%);
+  }
+  .plate.deep{
+    background:
+      radial-gradient(130% 150% at 20% 100%, #362c1e 0%, transparent 55%),
+      linear-gradient(200deg,#0f0e0b 0%,#25221a 40%,#524c38 100%);
+  }
+
+  /* ---------------- Masthead ---------------- */
+  header.masthead{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,241,232,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+  }
+  .masthead-row{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .wordmark{
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:-0.02em;
+  }
+  .wordmark sup{
+    font-weight:400; font-size:0.55rem; letter-spacing:0.12em;
+    color:var(--ink-soft); vertical-align:2px; margin-left:8px;
+    text-transform:uppercase;
+  }
+  nav.primary{display:flex; gap:clamp(16px,3vw,32px); align-items:center}
+  nav.primary a{
+    font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;
+    position:relative; padding-bottom:3px;
+  }
+  nav.primary a::after{
+    content:""; position:absolute; left:0; right:100%; bottom:0; height:1px;
+    background:var(--ink); transition:right .3s ease;
+  }
+  nav.primary a:hover::after,nav.primary a:focus-visible::after{right:0}
+  nav.primary a.map-link{
+    border:1px solid var(--ink); padding:6px 14px; border-radius:2px;
+  }
+  nav.primary a.map-link::after{display:none}
+  .nav-mobile-only{display:none}
+
+  /* ---------------- Hero ---------------- */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    min-height:92vh;
+    border-bottom:1px solid var(--rule);
+  }
+  .hero-text{
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:clamp(28px,6vw,72px);
+    padding-top:clamp(80px,14vh,140px);
+  }
+  .hero-text .eyebrow{margin-bottom:22px}
+  .hero-headline{
+    font-size:clamp(2.6rem,6.4vw,5rem);
+    line-height:1.02;
+    font-style:italic;
+    font-weight:400;
+    letter-spacing:-0.01em;
+    text-wrap:balance;
+    max-width:11ch;
+  }
+  .hero-sub{
+    margin-top:26px;
+    max-width:38ch;
+    font-size:1rem;
+    line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .hero-scroll{
+    margin-top:56px;
+    display:flex; align-items:center; gap:10px;
+    font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .hero-scroll .line{width:28px;height:1px;background:var(--ink-soft);
+    animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  .hero-plate{position:relative}
+  .hero-plate .caption{
+    position:absolute; left:24px; bottom:24px;
+    color:#efe9d8; font-size:0.7rem; letter-spacing:0.08em;
+    text-transform:uppercase; opacity:0.85;
+  }
+
+  /* ---------------- Editor's note ---------------- */
+  .note{
+    padding:clamp(72px,12vw,140px) 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .note-inner{max-width:640px; margin:0 auto; text-align:center}
+  .note-inner .eyebrow{margin-bottom:20px}
+  .note-inner p.serif{
+    font-size:clamp(1.3rem,2.6vw,1.65rem);
+    line-height:1.55;
+    font-style:italic;
+  }
+  .note-inner p.serif::first-letter{
+    font-size:2.6em; float:left; line-height:0.8; margin:0.06em 0.08em 0 0;
+    font-style:normal;
+  }
+
+  /* ---------------- Feature (field note) ---------------- */
+  .feature{
+    padding:clamp(56px,9vw,110px) 0;
+    border-bottom:1px solid var(--rule);
+  }
+  .feature-grid{
+    display:grid;
+    grid-template-columns:1.3fr 0.9fr;
+    gap:clamp(24px,4vw,56px);
+    align-items:end;
+  }
+  .feature-plate{aspect-ratio:4/5}
+  .feature-copy .eyebrow{margin-bottom:18px}
+  .feature-title{
+    font-size:clamp(1.8rem,3.4vw,2.6rem);
+    line-height:1.1; text-wrap:balance; margin-bottom:20px;
+  }
+  .feature-copy p{color:var(--ink-soft); line-height:1.7; max-width:46ch; margin-bottom:14px}
+  .feature-meta{
+    margin-top:24px; display:flex; gap:24px; font-size:0.75rem;
+    color:var(--ink-soft); letter-spacing:0.04em;
+  }
+  .feature-grid--reverse{grid-template-columns:0.9fr 1.3fr}
+  .feature-side{display:flex; flex-direction:column; gap:20px}
+  .feature-side .plate{aspect-ratio:1/1}
+  .feature-side p{font-size:0.85rem; color:var(--ink-soft); line-height:1.5}
+  .feature-side .serif{color:var(--ink); font-size:1.05rem; font-style:italic; margin-bottom:6px}
+
+  /* ---------------- Index / Contents ---------------- */
+  .index{padding:clamp(64px,9vw,110px) 0 40px}
+  .index-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:36px; flex-wrap:wrap;
+  }
+  .index-head h2{
+    font-family:"Libre Baskerville",Georgia,serif;
+    font-style:italic; font-weight:400;
+    font-size:clamp(1.8rem,3vw,2.3rem);
+  }
+  .index-head p{color:var(--ink-soft); font-size:0.9rem; max-width:32ch}
+
+  .filters{
+    display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 46px;
+    overflow-x:auto; padding-bottom:4px;
+  }
+  .filters button{
+    font-family:inherit; background:none; cursor:pointer;
+    border:1px solid var(--rule); border-radius:100px;
+    padding:7px 16px; font-size:0.75rem; letter-spacing:0.04em;
+    color:var(--ink-soft); white-space:nowrap;
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .filters button:hover{border-color:var(--ink); color:var(--ink)}
+  .filters button.active{background:var(--ink); border-color:var(--ink); color:var(--paper)}
+
+  .chapter{margin-bottom:8px}
+  .chapter-head{
+    display:flex; align-items:baseline; gap:20px;
+    padding:34px 0 18px;
+    border-top:1px solid var(--rule);
+  }
+  .chapter-num{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:1.4rem; color:var(--ink-soft); min-width:2.4ch;
+  }
+  .chapter-name{font-size:1.05rem; font-weight:700; letter-spacing:-0.01em}
+  .chapter-line{flex:1; color:var(--ink-soft); font-size:0.85rem; text-align:right}
+
+  .entry{
+    display:grid;
+    grid-template-columns:44px 1.4fr 1fr auto;
+    align-items:center;
+    gap:20px;
+    padding:20px 0;
+    border-top:1px solid var(--rule);
+    position:relative;
+    transition:opacity .3s ease, max-height .3s ease;
+  }
+  .entry.hidden{display:none}
+  .entry-no{
+    font-size:0.75rem; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+  }
+  .entry-name{
+    font-family:"Libre Baskerville",Georgia,serif;
+    font-size:clamp(1.15rem,1.8vw,1.5rem);
+  }
+  .entry-desc{color:var(--ink-soft); font-size:0.88rem; line-height:1.5}
+  .entry-tag{
+    font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--ink-soft); text-align:right; white-space:nowrap;
+  }
+  .entry-thumb{
+    position:absolute; right:calc(100% + 20px); top:50%;
+    transform:translateY(-50%) scale(0.94);
+    width:120px; height:80px;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    border-radius:2px;
+  }
+  @media (hover:hover){
+    .entry:hover .entry-thumb{opacity:1; transform:translateY(-50%) scale(1)}
+    .entry:hover .entry-name{text-decoration:underline; text-decoration-color:var(--mark); text-underline-offset:5px}
+  }
+
+  .index-foot{
+    padding:32px 0 8px; border-top:1px solid var(--rule);
+    display:flex; justify-content:space-between; align-items:center;
+    color:var(--ink-soft); font-size:0.8rem; flex-wrap:wrap; gap:12px;
+  }
+  .index-foot a{border-bottom:1px solid var(--ink-soft)}
+
+  /* ---------------- Map band ---------------- */
+  .mapband{
+    padding:clamp(60px,9vw,100px) 0;
+    border-bottom:1px solid var(--rule);
+    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .mapband h3{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:18px;
+  }
+  .mapband p{color:var(--ink-soft); line-height:1.7; max-width:42ch; margin-bottom:26px}
+  .mapband .cta{
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--ink); padding:12px 22px; font-size:0.8rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    transition:background .2s ease, color .2s ease;
+  }
+  .mapband .cta:hover{background:var(--ink); color:var(--paper)}
+  .map-plate{aspect-ratio:4/3; position:relative}
+  .map-plate .pin{
+    position:absolute; width:6px; height:6px; border-radius:50%;
+    background:var(--paper); box-shadow:0 0 0 3px rgba(245,241,232,0.25);
+  }
+
+  /* ---------------- Footer ---------------- */
+  footer{padding:clamp(48px,8vw,80px) 0 40px}
+  .foot-top{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;
+    padding-bottom:36px; border-bottom:1px solid var(--rule);
+  }
+  .foot-word{font-weight:700; font-size:1.1rem; margin-bottom:10px}
+  .foot-tag{color:var(--ink-soft); font-size:0.85rem; max-width:32ch; line-height:1.5}
+  .foot-cols{display:flex; gap:clamp(32px,6vw,80px)}
+  .foot-col h4{font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px}
+  .foot-col a{display:block; font-size:0.9rem; margin-bottom:10px}
+  .foot-col a:hover{text-decoration:underline}
+  .foot-bottom{
+    padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    font-size:0.72rem; color:var(--ink-soft); letter-spacing:0.02em;
+  }
+
+  /* reveal on scroll */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1; transform:translateY(0)}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1; transform:none; transition:none}
+    .hero-scroll .line{animation:none}
+    .entry-thumb{transition:none}
+  }
+
+  /* ---------------- Mobile ---------------- */
+  @media (max-width:860px){
+    nav.primary a:not(.map-link){display:none}
+    .nav-mobile-only{display:inline-flex}
+
+    .hero{grid-template-columns:1fr; min-height:auto}
+    .hero-plate{height:52vh; order:-1}
+    .hero-text{padding-top:44px}
+    .hero-headline{max-width:none}
+
+    .feature-grid{grid-template-columns:1fr}
+    .feature-side{flex-direction:row}
+    .feature-side .plate{aspect-ratio:1/1; flex:1}
+
+    .index-head{flex-direction:column; align-items:flex-start}
+
+    .entry{
+      grid-template-columns:56px 1fr;
+      grid-template-areas:
+        "no   name"
+        "tag  tag"
+        "thumb thumb"
+        "desc desc";
+      row-gap:6px;
+    }
+    .entry-no{grid-area:no}
+    .entry-name{grid-area:name}
+    .entry-desc{grid-area:desc}
+    .entry-tag{grid-area:tag; text-align:left; margin-top:2px}
+    .entry-thumb{
+      grid-area:thumb;
+      position:static; width:100%; height:120px; opacity:1; transform:none;
+      margin-top:4px;
+    }
+
+    .mapband{grid-template-columns:1fr}
+    .map-plate{order:-1; aspect-ratio:16/10}
+
+    .foot-top{flex-direction:column}
+    .foot-cols{gap:40px}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <a href="#top" class="wordmark">paperback<sup>Phnom Penh</sup></a>
+    <nav class="primary">
+      <a href="#index">Index</a>
+      <a href="#neighbourhoods">Neighbourhoods</a>
+      <a href="#about">About</a>
+      <a href="#map" class="map-link">Map</a>
+      <a href="#index" class="map-link nav-mobile-only" style="margin-left:8px">Index</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">A quiet guide to Phnom Penh</p>
+      <h1 class="hero-headline serif">Slowly,<br>into the city.</h1>
+      <p class="hero-sub">Paperback is not a directory of where to eat and drink. It is a small, ongoing record of the places in Phnom Penh worth knowing &mdash; chosen by hand, not by algorithm.</p>
+      <div class="hero-scroll"><span class="line"></span> Scroll</div>
+    </div>
+    <div class="hero-plate plate">
+      <span class="caption">Riverside, early morning</span>
+    </div>
+  </section>
+
+  <section class="note reveal">
+    <div class="wrap note-inner">
+      <p class="eyebrow">Editor&rsquo;s note</p>
+      <p class="serif">Phnom Penh does not reveal itself from a list. It takes a wrong turn down the right street, a shopfront that hasn&rsquo;t changed its sign in a decade, a room that only opens when someone remembers to unlock it. Nothing in this guide is trending &mdash; everything was visited, considered, and chosen by hand.</p>
+    </div>
+  </section>
+
+  <section class="feature reveal">
+    <div class="wrap feature-grid">
+      <div class="feature-plate plate warm"></div>
+      <div class="feature-copy">
+        <p class="eyebrow">Field note &mdash; 01</p>
+        <h2 class="feature-title serif">The Riverside, before the heat arrives</h2>
+        <p>For a few hours after sunrise, the strip along the Tonle Sap belongs to noodle carts, tai chi, and the low light coming off the water. We keep returning to three addresses along this stretch &mdash; a print shop, a coffee counter, and a bar that doesn&rsquo;t open a menu until dusk.</p>
+        <div class="feature-meta">
+          <span>Riverside</span>
+          <span>3 places</span>
+          <span>Updated this month</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feature reveal" style="padding-top:0">
+    <div class="wrap feature-grid feature-grid--reverse">
+      <div class="feature-side">
+        <div class="plate deep"></div>
+        <div>
+          <p class="serif">Weave House</p>
+          <p>Handloom cottons, dyed in small batches, in a workshop off Street 450.</p>
+        </div>
+      </div>
+      <div class="feature-copy">
+        <p class="eyebrow">Field note &mdash; 02</p>
+        <h2 class="feature-title serif">Tuol Tompoung&rsquo;s back streets</h2>
+        <p>Behind the Russian Market&rsquo;s stalls sits a quieter district of workshops &mdash; tailors, weavers, and record shops sharing tin-roofed buildings that rarely bother with signage. Ask, and someone will point the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="index" id="index">
+    <div class="wrap">
+      <div class="index-head reveal">
+        <h2 class="serif">Contents</h2>
+        <p>A running index of chosen places, organised by neighbourhood. Not ranked &mdash; only kept.</p>
+      </div>
+
+      <div class="filters reveal" role="group" aria-label="Filter by category">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="coffee">Coffee</button>
+        <button data-filter="food">Food &amp; drink</button>
+        <button data-filter="shopping">Shopping &amp; craft</button>
+        <button data-filter="culture">Culture</button>
+      </div>
+
+      <div id="listing">
+        <!-- Chapter I -->
+        <div class="chapter" data-chapter="riverside">
+          <div class="chapter-head reveal">
+            <span class="chapter-num serif">I.</span>
+            <span class="chapter-name">Riverside</span>
+            <span class="chapter-line">Colonial shopfronts along the Tonle Sap</span>
+          </div>
+
+          <div class="entry reveal" data-cat="coffee">
+            <span class="entry-no">01</span>
+            <span class="entry-name serif">A Colonial Doorway</span>
+            <span class="entry-desc">Espresso poured behind a shopfront window that hasn&rsquo;t changed in sixty years.</span>
+            <span class="entry-tag">Coffee</span>
+            <div class="entry-thumb plate"></div>
+          </div>
+          <div class="entry reveal" data-cat="food">
+            <span class="entry-no">02</span>
+            <span class="entry-name serif">Quay No. 9</span>
+            <span class="entry-desc">Amber light and a long counter facing the river, menu opens after dark.</span>
+            <span class="entry-tag">Bar</span>
+            <div class="entry-thumb plate deep"></div>
+          </div>
+          <div class="entry reveal" data-cat="shopping">
+            <span class="entry-no">03</span>
+            <span class="entry-name serif">Print &amp; Salt</span>
+            <span class="entry-desc">Secondhand paperbacks and hand-bound notebooks, stacked to the ceiling.</span>
+            <span class="entry-tag">Books</span>
+            <div class="entry-thumb plate warm"></div>
+          </div>
+        </div>
+
+        <!-- Chapter II -->
+        <div class="chapter" data-chapter="bkk1">
+          <div class="chapter-head reveal">
+            <span class="chapter-num serif">II.</span>
+            <span class="chapter-name">BKK1</span>
+            <span class="chapter-line">Leafy streets, galleries, and quiet coffee</span>
+          </div>
+
+          <div class="entry reveal" data-cat="culture">
+            <span class="entry-no">04</span>
+            <span class="entry-name serif">Sable Gallery</span>
+            <span class="entry-desc">A rotating room of Cambodian photography, open by chance more than schedule.</span>
+            <span class="entry-tag">Gallery</span>
+            <div class="entry-thumb plate deep"></div>
+          </div>
+          <div class="entry reveal" data-cat="food">
+            <span class="entry-no">05</span>
+            <span class="entry-name serif">The Long Table</span>
+            <span class="entry-desc">One dish a night, family-style, no menu printed twice.</span>
+            <span class="entry-tag">Restaurant</span>
+            <div class="entry-thumb plate"></div>
+          </div>
+          <div class="entry reveal" data-cat="coffee">
+            <span class="entry-no">06</span>
+            <span class="entry-name serif">Morning Room</span>
+            <span class="entry-desc">Filter coffee and quiet conversation before the heat sets in.</span>
+            <span class="entry-tag">Coffee</span>
+            <div class="entry-thumb plate warm"></div>
+          </div>
+        </div>
+
+        <!-- Chapter III -->
+        <div class="chapter" data-chapter="old-quarter">
+          <div class="chapter-head reveal">
+            <span class="chapter-num serif">III.</span>
+            <span class="chapter-name">Old Quarter</span>
+            <span class="chapter-line">Markets, temples, layered history</span>
+          </div>
+
+          <div class="entry reveal" data-cat="food">
+            <span class="entry-no">07</span>
+            <span class="entry-name serif">Market Edge Noodles</span>
+            <span class="entry-desc">A plastic-stool institution, three generations deep.</span>
+            <span class="entry-tag">Food stall</span>
+            <div class="entry-thumb plate"></div>
+          </div>
+          <div class="entry reveal" data-cat="shopping">
+            <span class="entry-no">08</span>
+            <span class="entry-name serif">The Tailor&rsquo;s Corner</span>
+            <span class="entry-desc">Made-to-measure in two days, patterns cut by eye, not paper.</span>
+            <span class="entry-tag">Craft</span>
+            <div class="entry-thumb plate warm"></div>
+          </div>
+          <div class="entry reveal" data-cat="culture">
+            <span class="entry-no">09</span>
+            <span class="entry-name serif">Lotus &amp; Incense</span>
+            <span class="entry-desc">A working pagoda tucked behind the market&rsquo;s north gate.</span>
+            <span class="entry-tag">Heritage</span>
+            <div class="entry-thumb plate deep"></div>
+          </div>
+        </div>
+
+        <!-- Chapter IV -->
+        <div class="chapter" data-chapter="tuol-tompoung">
+          <div class="chapter-head reveal">
+            <span class="chapter-num serif">IV.</span>
+            <span class="chapter-name">Tuol Tompoung</span>
+            <span class="chapter-line">Workshops and artisans around the Russian Market</span>
+          </div>
+
+          <div class="entry reveal" data-cat="shopping">
+            <span class="entry-no">10</span>
+            <span class="entry-name serif">Workshop Row</span>
+            <span class="entry-desc">Independent studios sharing one long tin-roofed building.</span>
+            <span class="entry-tag">Design</span>
+            <div class="entry-thumb plate"></div>
+          </div>
+          <div class="entry reveal" data-cat="shopping">
+            <span class="entry-no">11</span>
+            <span class="entry-name serif">Weave House</span>
+            <span class="entry-desc">Handloom cottons, dyed in small, imperfect batches.</span>
+            <span class="entry-tag">Textiles</span>
+            <div class="entry-thumb plate warm"></div>
+          </div>
+          <div class="entry reveal" data-cat="culture">
+            <span class="entry-no">12</span>
+            <span class="entry-name serif">Back Alley Records</span>
+            <span class="entry-desc">Khmer rock reissues, and a turntable you&rsquo;re welcome to use.</span>
+            <span class="entry-tag">Music</span>
+            <div class="entry-thumb plate deep"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="index-foot reveal">
+        <span id="count-label">12 places, 4 neighbourhoods &mdash; added to by hand.</span>
+        <a href="#index">Back to top of index &uarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mapband reveal" id="map">
+    <div class="wrap" style="display:contents">
+      <div>
+        <p class="eyebrow" style="margin-bottom:14px">Find your way</p>
+        <h3 class="serif">Every entry, one map.</h3>
+        <p>Each place in the index carries its own pin. Open the full map to see how a morning in Riverside connects to an afternoon in Tuol Tompoung &mdash; and plan a route that isn&rsquo;t a list.</p>
+        <a class="cta" href="#index">Open the map &rarr;</a>
+      </div>
+      <div class="map-plate plate deep" aria-hidden="true">
+        <span class="pin" style="left:28%;top:34%"></span>
+        <span class="pin" style="left:52%;top:22%"></span>
+        <span class="pin" style="left:64%;top:58%"></span>
+        <span class="pin" style="left:40%;top:70%"></span>
+        <span class="pin" style="left:74%;top:40%"></span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="about">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <p class="foot-word">paperback</p>
+        <p class="foot-tag">A quiet guide to Phnom Penh. Not trend, but character &mdash; every place chosen by hand.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Guide</h4>
+          <a href="#index">Index</a>
+          <a href="#neighbourhoods">Neighbourhoods</a>
+          <a href="#map">Map</a>
+        </div>
+        <div class="foot-col">
+          <h4>Paperback</h4>
+          <a href="#about">About</a>
+          <a href="#">Instagram</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Phnom Penh, Cambodia &mdash; edition updated continuously.</span>
+      <span>&copy; Paperback</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // category filter
+  const buttons = document.querySelectorAll('.filters button');
+  const entries = document.querySelectorAll('.entry');
+  const chapters = document.querySelectorAll('.chapter');
+  const countLabel = document.getElementById('count-label');
+
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      entries.forEach(en=>{
+        const show = filter === 'all' || en.dataset.cat === filter;
+        en.classList.toggle('hidden', !show);
+        if(show) visible++;
+      });
+      chapters.forEach(ch=>{
+        const anyVisible = [...ch.querySelectorAll('.entry')].some(en=>!en.classList.contains('hidden'));
+        ch.style.display = anyVisible ? '' : 'none';
+      });
+      const chapterCount = [...chapters].filter(ch=>ch.style.display!=='none').length;
+      countLabel.textContent = filter === 'all'
+        ? '12 places, 4 neighbourhoods — added to by hand.'
+        : visible + (visible===1 ? ' place' : ' places') + ' in ' + chapterCount + (chapterCount===1?' neighbourhood':' neighbourhoods') + '.';
+    });
+  });
+</script>

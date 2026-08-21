@@ -1,0 +1,529 @@
+<meta charset="utf-8">
+<title>Paperback Phnom Penh — V2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f1e8;
+    --paper-deep:#ece5d4;
+    --ink:#15140f;
+    --ink-soft:#57534a;
+    --rule:#d8d0bc;
+    --mark:#7c2c1f;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--paper); scroll-behavior:auto}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:"Libre Baskerville","Baskerville Old Face",Baskerville,Georgia,serif}
+  .wrap{max-width:1360px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+  .eyebrow{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+
+  /* ---------------- grain plates (stand in for photography) ---------------- */
+  .plate{position:relative; overflow:hidden; background:
+      radial-gradient(120% 140% at 12% 8%, #2c2a22 0%, transparent 55%),
+      radial-gradient(140% 120% at 90% 90%, #3a3529 0%, transparent 60%),
+      linear-gradient(155deg, #1c1a15 0%, #33301f 45%, #4a4634 75%, #6b6650 100%);
+  }
+  .plate::after{
+    content:""; position:absolute; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+    mix-blend-mode:overlay; opacity:0.5; pointer-events:none;
+  }
+  .plate--b{background:
+      radial-gradient(120% 140% at 85% 10%, #55432c 0%, transparent 55%),
+      radial-gradient(140% 120% at 10% 95%, #23201a 0%, transparent 60%),
+      linear-gradient(160deg, #efe6cf 0%, #b7a883 35%, #4a4230 70%, #1a1712 100%);
+  }
+  .plate--c{background:
+      radial-gradient(130% 150% at 20% 100%, #362c1e 0%, transparent 55%),
+      linear-gradient(200deg,#0f0e0b 0%,#25221a 40%,#524c38 100%);
+  }
+  .plate--d{background:
+      radial-gradient(130% 140% at 80% 20%, #3a4232 0%, transparent 55%),
+      linear-gradient(170deg,#12140f 0%,#2c3324 45%,#5c6650 100%);
+  }
+  .plate--e{background:
+      radial-gradient(120% 150% at 15% 85%, #4a3630 0%, transparent 55%),
+      linear-gradient(190deg,#241a17 0%,#4a332c 50%,#7a5c50 100%);
+  }
+
+  /* ---------------- masthead ---------------- */
+  header.mast{
+    position:fixed; top:0; left:0; right:0; z-index:80;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    mix-blend-mode:difference;
+  }
+  .mast-word{
+    font-weight:700; font-size:1rem; letter-spacing:-0.01em; color:#fff;
+  }
+  .mast-nav{display:flex; gap:clamp(18px,3vw,30px)}
+  .mast-nav a{font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#fff}
+
+  /* ---------------- hero ---------------- */
+  .hero{position:relative; height:170vh}
+  .hero-stage{
+    position:sticky; top:0; height:100vh; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+  }
+  .hero-photo{
+    position:absolute; inset:0; opacity:0.12; transform:scale(1.08);
+    transition:opacity .1s linear, transform .1s linear;
+  }
+  .hero-kicker{position:relative; z-index:2; margin-bottom:18px}
+  .hero-words{position:relative; z-index:2}
+  .hero-line{
+    display:block;
+    font-weight:700;
+    font-size:clamp(3.2rem, 13vw, 10.5rem);
+    line-height:0.92;
+    letter-spacing:-0.03em;
+    background-image:
+      radial-gradient(120% 140% at 12% 8%, #2c2a22 0%, transparent 55%),
+      radial-gradient(140% 120% at 90% 90%, #3a3529 0%, transparent 60%),
+      linear-gradient(155deg, #1c1a15 0%, #33301f 45%, #4a4634 75%, #6b6650 100%);
+    background-size:220% 220%;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    transition:transform .1s linear;
+    will-change:transform;
+  }
+  .hero-line--2{background-position:100% 100%}
+  .hero-sub{position:relative; z-index:2; margin-top:26px; font-size:1rem; color:var(--ink-soft); max-width:34ch}
+  .hero-cue{
+    position:absolute; left:50%; bottom:38px; transform:translateX(-50%);
+    z-index:2; display:flex; align-items:center; gap:10px;
+    font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft);
+    transition:opacity .3s ease;
+  }
+  .hero-cue .line{width:26px; height:1px; background:var(--ink-soft); animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+  /* ---------------- walk (index) ---------------- */
+  .walk{padding-top:64px}
+  .walk-head{padding:8px 0 8px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+  .walk-head-row{display:flex; justify-content:space-between; align-items:center; padding:22px 0; flex-wrap:wrap; gap:14px}
+  .walk-head h2{font-size:0.85rem; letter-spacing:0.05em}
+  .filters{display:flex; gap:0; flex-wrap:wrap; font-size:0.78rem}
+  .filters button{
+    font-family:inherit; background:none; border:none; cursor:pointer;
+    color:var(--ink-soft); padding:2px 0; margin-left:16px;
+    letter-spacing:0.02em; position:relative;
+  }
+  .filters button:first-child{margin-left:0}
+  .filters button::after{content:"/"; position:absolute; right:-13px; color:var(--rule)}
+  .filters button:last-child::after{content:""}
+  .filters button.active{color:var(--ink); text-decoration:underline; text-decoration-color:var(--mark); text-underline-offset:4px}
+
+  .walk-grid{display:grid; grid-template-columns:1.15fr 0.85fr; align-items:start}
+  .list{padding-bottom:14vh}
+
+  .row{
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    align-items:baseline;
+    gap:20px;
+    padding:26px 0;
+    border-bottom:1px solid var(--rule);
+    cursor:default;
+  }
+  .row-no{font-size:0.75rem; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+    opacity:calc(0.45 + var(--t,0) * 0.55); transition:opacity .15s linear;}
+  .row-name{
+    font-family:"Libre Baskerville",Georgia,serif;
+    font-size:clamp(1.2rem,2.4vw,1.9rem);
+    transform-origin:left center;
+    transform:scale(calc(1 + var(--t,0) * 0.09));
+    opacity:calc(0.45 + var(--t,0) * 0.55);
+    transition:opacity .15s linear;
+    will-change:transform;
+  }
+  .row.is-active .row-name{font-weight:700}
+  .row-cat{
+    font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft);
+    text-align:right; white-space:nowrap;
+    opacity:calc(0.45 + var(--t,0) * 0.55); transition:opacity .15s linear;
+  }
+  .row-plate-wrap{display:none}
+  .row-plate{min-height:0; aspect-ratio:16/10; margin-top:18px}
+
+  .divider{
+    padding:56px 0 30px;
+    display:flex; align-items:baseline; gap:22px;
+    border-bottom:1px solid var(--rule);
+  }
+  .divider .roman{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:1.7rem; color:var(--ink-soft);
+    opacity:calc(0.5 + var(--t,0) * 0.5); transition:opacity .15s linear;}
+  .divider .hood{font-size:1.15rem; font-weight:700; letter-spacing:-0.01em}
+  .divider .sub{color:var(--ink-soft); font-size:0.85rem; flex:1; text-align:right}
+
+  /* sticky photo frame — desktop only */
+  .frame-col{position:sticky; top:0; height:100vh; display:flex; align-items:center; padding-left:clamp(24px,4vw,56px)}
+  .frame{position:relative; width:100%; aspect-ratio:4/5; overflow:hidden}
+  .frame-plate{
+    position:absolute; inset:0;
+    clip-path:inset(0 0 100% 0);
+    transition:clip-path .65s cubic-bezier(.22,.61,.36,1);
+  }
+  .frame-plate:first-of-type{clip-path:inset(0 0 0 0)}
+  .frame-caption{
+    position:absolute; left:20px; bottom:20px; z-index:3;
+    color:#efe9d8; font-size:0.75rem; letter-spacing:0.04em;
+  }
+  .frame-caption .area{display:block; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; opacity:0.75; margin-top:3px}
+
+  /* ---------------- colophon ---------------- */
+  footer{padding:clamp(48px,8vw,88px) 0 40px; border-top:1px solid var(--rule)}
+  .foot-row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; align-items:flex-end}
+  .foot-word{font-weight:700; font-size:1rem; margin-bottom:8px}
+  .foot-tag{color:var(--ink-soft); font-size:0.85rem; max-width:34ch; line-height:1.5}
+  .foot-links{display:flex; gap:28px}
+  .foot-links a{font-size:0.85rem; border-bottom:1px solid var(--ink-soft)}
+  .foot-meta{margin-top:36px; padding-top:20px; border-top:1px solid var(--rule);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+    font-size:0.72rem; color:var(--ink-soft)}
+
+  @media (prefers-reduced-motion:reduce){
+    .hero{height:auto}
+    .hero-stage{position:relative; height:auto; padding:22vh 0 12vh}
+    .hero-photo{opacity:0.3; transform:none}
+    .hero-line{transform:none !important}
+    .hero-cue{display:none}
+    .row-plate-wrap{transition:none}
+    .frame-plate{transition:none}
+    .row-name,.row-no,.row-cat,.divider .roman{transition:none}
+    .hero-cue .line{animation:none}
+  }
+
+  /* ---------------- mobile ---------------- */
+  @media (max-width:860px){
+    header.mast{padding:18px 20px}
+    .hero-line{font-size:clamp(2.6rem,15vw,4.6rem)}
+    .hero-sub{font-size:0.92rem}
+
+    .walk-grid{grid-template-columns:1fr}
+    .frame-col{display:none}
+    .row{grid-template-columns:40px 1fr auto; padding:20px 0}
+    .row-plate-wrap{
+      display:grid; grid-template-rows:0fr; overflow:hidden;
+      transition:grid-template-rows .55s cubic-bezier(.22,.61,.36,1);
+      grid-column:1/-1;
+    }
+    .row.is-active .row-plate-wrap{grid-template-rows:1fr}
+    .row-plate{aspect-ratio:4/3}
+    .divider{padding:44px 0 22px; flex-wrap:wrap}
+    .divider .sub{flex-basis:100%; text-align:left; margin-top:4px}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+
+<header class="mast">
+  <a href="#top" class="mast-word">paperback</a>
+  <nav class="mast-nav">
+    <a href="#walk">Index</a>
+    <a href="#map">Map</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-stage">
+      <div class="hero-photo plate" id="heroPhoto"></div>
+      <p class="eyebrow hero-kicker">paperback — a quiet guide</p>
+      <h1 class="hero-words">
+        <span class="hero-line hero-line--1" id="heroL1">Phnom</span>
+        <span class="hero-line hero-line--2" id="heroL2">Penh.</span>
+      </h1>
+      <p class="hero-sub">Not a list of where to go. A slow record of what we found by walking.</p>
+      <div class="hero-cue" id="heroCue"><span class="line"></span> Scroll to walk in</div>
+    </div>
+  </section>
+
+  <section class="walk" id="walk">
+    <div class="wrap">
+      <div class="walk-head">
+        <div class="walk-head-row">
+          <h2 class="serif" style="font-style:italic; font-size:1.3rem">The Index</h2>
+          <div class="filters" id="filters">
+            <button class="active" data-filter="all">All</button>
+            <button data-filter="coffee">Coffee</button>
+            <button data-filter="food">Food &amp; drink</button>
+            <button data-filter="craft">Craft</button>
+            <button data-filter="culture">Culture</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="walk-grid">
+        <div class="list" id="list">
+
+          <div class="divider" data-plate="h0"><span class="roman">I</span><span class="hood">Riverside</span><span class="sub">Colonial shopfronts along the Tonle Sap</span></div>
+
+          <div class="row is-active" data-cat="coffee" data-plate="p0" data-caption="A Colonial Doorway" data-area="Riverside">
+            <span class="row-no">01</span>
+            <span class="row-name">A Colonial Doorway</span>
+            <span class="row-cat">Coffee</span>
+            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+          </div>
+          <div class="row" data-cat="food" data-plate="p1" data-caption="Quay No. 9" data-area="Riverside">
+            <span class="row-no">02</span>
+            <span class="row-name">Quay No. 9</span>
+            <span class="row-cat">Bar</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--c"></div></div>
+          </div>
+          <div class="row" data-cat="craft" data-plate="p2" data-caption="Print &amp; Salt" data-area="Riverside">
+            <span class="row-no">03</span>
+            <span class="row-name">Print &amp; Salt</span>
+            <span class="row-cat">Books</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+          </div>
+
+          <div class="divider" data-plate="h1"><span class="roman">II</span><span class="hood">BKK1</span><span class="sub">Leafy streets, galleries, and quiet coffee</span></div>
+
+          <div class="row" data-cat="culture" data-plate="p3" data-caption="Sable Gallery" data-area="BKK1">
+            <span class="row-no">04</span>
+            <span class="row-name">Sable Gallery</span>
+            <span class="row-cat">Gallery</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--c"></div></div>
+          </div>
+          <div class="row" data-cat="food" data-plate="p4" data-caption="The Long Table" data-area="BKK1">
+            <span class="row-no">05</span>
+            <span class="row-name">The Long Table</span>
+            <span class="row-cat">Restaurant</span>
+            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+          </div>
+          <div class="row" data-cat="coffee" data-plate="p5" data-caption="Morning Room" data-area="BKK1">
+            <span class="row-no">06</span>
+            <span class="row-name">Morning Room</span>
+            <span class="row-cat">Coffee</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+          </div>
+
+          <div class="divider" data-plate="h2"><span class="roman">III</span><span class="hood">Old Quarter</span><span class="sub">Markets, temples, layered history</span></div>
+
+          <div class="row" data-cat="food" data-plate="p6" data-caption="Market Edge Noodles" data-area="Old Quarter">
+            <span class="row-no">07</span>
+            <span class="row-name">Market Edge Noodles</span>
+            <span class="row-cat">Food stall</span>
+            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+          </div>
+          <div class="row" data-cat="craft" data-plate="p7" data-caption="The Tailor&rsquo;s Corner" data-area="Old Quarter">
+            <span class="row-no">08</span>
+            <span class="row-name">The Tailor&rsquo;s Corner</span>
+            <span class="row-cat">Craft</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+          </div>
+          <div class="row" data-cat="culture" data-plate="p8" data-caption="Lotus &amp; Incense" data-area="Old Quarter">
+            <span class="row-no">09</span>
+            <span class="row-name">Lotus &amp; Incense</span>
+            <span class="row-cat">Heritage</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--d"></div></div>
+          </div>
+
+          <div class="divider" data-plate="h3"><span class="roman">IV</span><span class="hood">Tuol Tompoung</span><span class="sub">Workshops around the Russian Market</span></div>
+
+          <div class="row" data-cat="craft" data-plate="p9" data-caption="Workshop Row" data-area="Tuol Tompoung">
+            <span class="row-no">10</span>
+            <span class="row-name">Workshop Row</span>
+            <span class="row-cat">Design</span>
+            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+          </div>
+          <div class="row" data-cat="craft" data-plate="p10" data-caption="Weave House" data-area="Tuol Tompoung">
+            <span class="row-no">11</span>
+            <span class="row-name">Weave House</span>
+            <span class="row-cat">Textiles</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+          </div>
+          <div class="row" data-cat="culture" data-plate="p11" data-caption="Back Alley Records" data-area="Tuol Tompoung">
+            <span class="row-no">12</span>
+            <span class="row-name">Back Alley Records</span>
+            <span class="row-cat">Music</span>
+            <div class="row-plate-wrap"><div class="row-plate plate plate--e"></div></div>
+          </div>
+
+        </div>
+
+        <div class="frame-col">
+          <div class="frame" id="frame">
+            <div class="frame-plate plate" data-plate-id="p0"></div>
+            <div class="frame-plate plate plate--c" data-plate-id="p1"></div>
+            <div class="frame-plate plate plate--b" data-plate-id="p2"></div>
+            <div class="frame-plate plate plate--c" data-plate-id="p3"></div>
+            <div class="frame-plate plate" data-plate-id="p4"></div>
+            <div class="frame-plate plate plate--b" data-plate-id="p5"></div>
+            <div class="frame-plate plate" data-plate-id="p6"></div>
+            <div class="frame-plate plate plate--b" data-plate-id="p7"></div>
+            <div class="frame-plate plate plate--d" data-plate-id="p8"></div>
+            <div class="frame-plate plate" data-plate-id="p9"></div>
+            <div class="frame-plate plate plate--b" data-plate-id="p10"></div>
+            <div class="frame-plate plate plate--e" data-plate-id="p11"></div>
+            <div class="frame-plate plate plate--d" data-plate-id="h0"></div>
+            <div class="frame-plate plate plate--c" data-plate-id="h1"></div>
+            <div class="frame-plate plate plate--d" data-plate-id="h2"></div>
+            <div class="frame-plate plate plate--e" data-plate-id="h3"></div>
+            <div class="frame-caption" id="frameCaption">A Colonial Doorway<span class="area">Riverside</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="map">
+    <div class="wrap">
+      <div class="foot-row">
+        <div>
+          <p class="foot-word">paperback</p>
+          <p class="foot-tag">A quiet guide to Phnom Penh. Not trend, but character — every place chosen by hand.</p>
+        </div>
+        <div class="foot-links">
+          <a href="#top">Top</a>
+          <a href="#walk">Index</a>
+          <a href="#">Full map ↗</a>
+          <a href="#">About</a>
+        </div>
+      </div>
+      <div class="foot-meta">
+        <span>Phnom Penh, Cambodia — edition updated continuously.</span>
+        <span>&copy; Paperback</span>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqDesktop = window.matchMedia('(min-width: 861px)');
+
+  /* ---------- hero: type parting + photo reveal, scrubbed to hero height ---------- */
+  var hero = document.querySelector('.hero');
+  var heroPhoto = document.getElementById('heroPhoto');
+  var heroL1 = document.getElementById('heroL1');
+  var heroL2 = document.getElementById('heroL2');
+  var heroCue = document.getElementById('heroCue');
+
+  function updateHero(){
+    if(reduced) return;
+    var rect = hero.getBoundingClientRect();
+    var total = rect.height - window.innerHeight;
+    var progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+    var spread = progress * 62; // vw
+    heroL1.style.transform = 'translateX(' + (-spread) + 'vw)';
+    heroL2.style.transform = 'translateX(' + (spread) + 'vw)';
+    heroPhoto.style.opacity = String(0.12 + progress * 0.88);
+    heroPhoto.style.transform = 'scale(' + (1.08 - progress * 0.08) + ')';
+    heroCue.style.opacity = String(Math.max(0, 1 - progress * 3));
+  }
+
+  /* ---------- walk: nearest-row focus + directional plate wipe ---------- */
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row, .divider'));
+  var frame = document.getElementById('frame');
+  var frameCaption = document.getElementById('frameCaption');
+  var activeRow = document.querySelector('.row.is-active, .divider.is-active') || (rows.length ? rows[0] : null);
+  var lastY = window.scrollY;
+
+  function setActivePlate(row, dir){
+    if(!mqDesktop.matches) return;
+    var key = row.getAttribute('data-plate');
+    if(!key) return;
+    var newPlate = frame.querySelector('[data-plate-id="' + key + '"]');
+    var oldPlate = frame.querySelector('.frame-plate.is-shown');
+    if(!newPlate || newPlate === oldPlate) return;
+
+    if(oldPlate){
+      oldPlate.classList.remove('is-shown');
+      oldPlate.style.clipPath = dir === 'down' ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)';
+    }
+    newPlate.style.transition = 'none';
+    newPlate.style.clipPath = dir === 'down' ? 'inset(0 0 100% 0)' : 'inset(100% 0 0 0)';
+    newPlate.classList.add('is-shown');
+    // force reflow, then animate to fully shown
+    void newPlate.offsetWidth;
+    newPlate.style.transition = '';
+    requestAnimationFrame(function(){
+      newPlate.style.clipPath = 'inset(0 0 0 0)';
+    });
+
+    if(row.classList.contains('divider')){
+      frameCaption.innerHTML = row.querySelector('.hood').textContent + '<span class="area">' + row.querySelector('.sub').textContent + '</span>';
+    } else {
+      frameCaption.innerHTML = row.getAttribute('data-caption') + '<span class="area">' + row.getAttribute('data-area') + '</span>';
+    }
+  }
+
+  function computeFocus(){
+    var line = window.innerHeight * 0.42;
+    var nearest = null, nearestDist = Infinity;
+
+    for(var i = 0; i < rows.length; i++){
+      var row = rows[i];
+      var rect = row.getBoundingClientRect();
+      if(rect.bottom < -200 || rect.top > window.innerHeight + 200){ continue; }
+      var center = rect.top + rect.height / 2;
+      var dist = Math.abs(center - line);
+      var t = Math.max(0, 1 - dist / 260);
+      row.style.setProperty('--t', t.toFixed(3));
+      if(dist < nearestDist){ nearestDist = dist; nearest = row; }
+    }
+
+    if(nearest && nearest !== activeRow){
+      var dir = window.scrollY > lastY ? 'down' : 'up';
+      if(activeRow) activeRow.classList.remove('is-active');
+      nearest.classList.add('is-active');
+      setActivePlate(nearest, dir);
+      activeRow = nearest;
+    }
+    lastY = window.scrollY;
+  }
+
+  var ticking = false;
+  function onScroll(){
+    updateHero();
+    if(!ticking){
+      window.requestAnimationFrame(function(){ computeFocus(); ticking = false; });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function(){ updateHero(); computeFocus(); });
+
+  updateHero();
+  computeFocus();
+
+  /* ---------- filters ---------- */
+  var filterBtns = document.querySelectorAll('#filters button');
+  var allRows = document.querySelectorAll('.row');
+  var dividers = document.querySelectorAll('.divider');
+
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+
+      allRows.forEach(function(row){
+        row.style.display = (f === 'all' || row.getAttribute('data-cat') === f) ? '' : 'none';
+      });
+      dividers.forEach(function(div){
+        var next = div.nextElementSibling;
+        var anyVisible = false;
+        while(next && next.classList.contains('row')){
+          if(next.style.display !== 'none') anyVisible = true;
+          next = next.nextElementSibling;
+        }
+        div.style.display = anyVisible ? '' : 'none';
+      });
+      computeFocus();
+    });
+  });
+})();
+</script>
