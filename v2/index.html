@@ -25,33 +25,21 @@
   .wrap{max-width:1360px;margin:0 auto;padding:0 clamp(20px,5vw,64px)}
   .eyebrow{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
 
-  /* ---------------- grain plates (stand in for photography) ---------------- */
-  .plate{position:relative; overflow:hidden; background:
-      radial-gradient(120% 140% at 12% 8%, #2c2a22 0%, transparent 55%),
-      radial-gradient(140% 120% at 90% 90%, #3a3529 0%, transparent 60%),
-      linear-gradient(155deg, #1c1a15 0%, #33301f 45%, #4a4634 75%, #6b6650 100%);
+  /* ---------------- photo plates (real curated images, see assets/images/CREDITS.md) ---------------- */
+  .plate{
+    position:relative; overflow:hidden;
+    background-size:cover; background-position:center;
+    filter:saturate(.86) contrast(1.05) brightness(.98);
+  }
+  .plate::before{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(165deg, rgba(21,20,15,.4) 0%, rgba(21,20,15,.06) 40%, rgba(21,20,15,.28) 100%);
+    mix-blend-mode:multiply; pointer-events:none;
   }
   .plate::after{
     content:""; position:absolute; inset:0;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
-    mix-blend-mode:overlay; opacity:0.5; pointer-events:none;
-  }
-  .plate--b{background:
-      radial-gradient(120% 140% at 85% 10%, #55432c 0%, transparent 55%),
-      radial-gradient(140% 120% at 10% 95%, #23201a 0%, transparent 60%),
-      linear-gradient(160deg, #efe6cf 0%, #b7a883 35%, #4a4230 70%, #1a1712 100%);
-  }
-  .plate--c{background:
-      radial-gradient(130% 150% at 20% 100%, #362c1e 0%, transparent 55%),
-      linear-gradient(200deg,#0f0e0b 0%,#25221a 40%,#524c38 100%);
-  }
-  .plate--d{background:
-      radial-gradient(130% 140% at 80% 20%, #3a4232 0%, transparent 55%),
-      linear-gradient(170deg,#12140f 0%,#2c3324 45%,#5c6650 100%);
-  }
-  .plate--e{background:
-      radial-gradient(120% 150% at 15% 85%, #4a3630 0%, transparent 55%),
-      linear-gradient(190deg,#241a17 0%,#4a332c 50%,#7a5c50 100%);
+    mix-blend-mode:overlay; opacity:0.16; pointer-events:none;
   }
 
   /* ---------------- masthead ---------------- */
@@ -86,16 +74,16 @@
     font-size:clamp(3.2rem, 13vw, 10.5rem);
     line-height:0.92;
     letter-spacing:-0.03em;
-    background-image:
-      radial-gradient(120% 140% at 12% 8%, #2c2a22 0%, transparent 55%),
-      radial-gradient(140% 120% at 90% 90%, #3a3529 0%, transparent 60%),
-      linear-gradient(155deg, #1c1a15 0%, #33301f 45%, #4a4634 75%, #6b6650 100%);
-    background-size:220% 220%;
+    background-image:linear-gradient(rgba(10,9,6,.55),rgba(10,9,6,.55)), url('assets/images/hero.jpg');
+    background-size:cover, 220% 220%;
+    background-position:center, center;
+    background-blend-mode:multiply, normal;
     -webkit-background-clip:text; background-clip:text; color:transparent;
     transition:transform .1s linear;
     will-change:transform;
+    filter:saturate(.8) contrast(1.08);
   }
-  .hero-line--2{background-position:100% 100%}
+  .hero-line--2{background-position:center, 100% 60%}
   .hero-sub{position:relative; z-index:2; margin-top:26px; font-size:1rem; color:var(--ink-soft); max-width:34ch}
   .hero-cue{
     position:absolute; left:50%; bottom:38px; transform:translateX(-50%);
@@ -105,6 +93,29 @@
   }
   .hero-cue .line{width:26px; height:1px; background:var(--ink-soft); animation:pulse 2.4s ease-in-out infinite}
   @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+  /* ---------------- feature teaser (top article) ---------------- */
+  .feature-teaser{border-bottom:1px solid var(--rule)}
+  .feature-link{
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
+    min-height:56vh;
+  }
+  .feature-plate{overflow:hidden}
+  .feature-plate img,.feature-plate{transition:filter .5s ease}
+  .feature-link:hover .feature-plate{filter:saturate(1) contrast(1.02) brightness(1.02)}
+  .feature-copy{
+    display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(28px,5vw,72px);
+  }
+  .feature-copy .eyebrow{margin-bottom:20px}
+  .feature-copy h2{font-size:clamp(1.7rem,3.4vw,2.6rem); line-height:1.08; font-style:italic; margin-bottom:20px; max-width:14ch}
+  .feature-copy p{color:var(--ink-soft); font-size:1rem; line-height:1.6; max-width:38ch; margin-bottom:26px}
+  .feature-cta{
+    font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .feature-cta .arrow{transition:transform .25s ease}
+  .feature-link:hover .feature-cta .arrow{transform:translateX(5px)}
 
   /* ---------------- walk (index) ---------------- */
   .walk{padding-top:64px}
@@ -208,6 +219,11 @@
     .hero-line{font-size:clamp(2.6rem,15vw,4.6rem)}
     .hero-sub{font-size:0.92rem}
 
+    .feature-link{grid-template-columns:1fr; min-height:auto}
+    .feature-plate{aspect-ratio:4/3}
+    .feature-copy{padding:28px 20px}
+    .feature-copy p{max-width:none}
+
     .walk-grid{grid-template-columns:1fr}
     .frame-col{display:none}
     .row{grid-template-columns:40px 1fr auto; padding:20px 0}
@@ -236,7 +252,7 @@
 <main id="top">
   <section class="hero">
     <div class="hero-stage">
-      <div class="hero-photo plate" id="heroPhoto"></div>
+      <div class="hero-photo plate" id="heroPhoto" style="background-image:url('assets/images/hero.jpg')"></div>
       <p class="eyebrow hero-kicker">paperback — a quiet guide</p>
       <h1 class="hero-words">
         <span class="hero-line hero-line--1" id="heroL1">Phnom</span>
@@ -245,6 +261,18 @@
       <p class="hero-sub">Not a list of where to go. A slow record of what we found by walking.</p>
       <div class="hero-cue" id="heroCue"><span class="line"></span> Scroll to walk in</div>
     </div>
+  </section>
+
+  <section class="feature-teaser">
+    <a href="article.html" class="feature-link">
+      <div class="feature-plate plate" style="background-image:url('assets/images/hood-riverside.jpg')"></div>
+      <div class="feature-copy">
+        <span class="eyebrow">Field Note &mdash; 01 &middot; Riverside</span>
+        <h2 class="serif">The Riverside,<br>Before the Heat Arrives</h2>
+        <p>Three mornings along the Tonle Sap, before the tour groups and the heat arrive.</p>
+        <span class="feature-cta">Read the field note <span class="arrow">&rarr;</span></span>
+      </div>
+    </a>
   </section>
 
   <section class="walk" id="walk">
@@ -271,19 +299,19 @@
             <span class="row-no">01</span>
             <span class="row-name">A Colonial Doorway</span>
             <span class="row-cat">Coffee</span>
-            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-colonial-doorway.jpg')"></div></div>
           </div>
           <div class="row" data-cat="food" data-plate="p1" data-caption="Quay No. 9" data-area="Riverside">
             <span class="row-no">02</span>
             <span class="row-name">Quay No. 9</span>
             <span class="row-cat">Bar</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--c"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-quay-no9.jpg')"></div></div>
           </div>
           <div class="row" data-cat="craft" data-plate="p2" data-caption="Print &amp; Salt" data-area="Riverside">
             <span class="row-no">03</span>
             <span class="row-name">Print &amp; Salt</span>
             <span class="row-cat">Books</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-print-salt.jpg')"></div></div>
           </div>
 
           <div class="divider" data-plate="h1"><span class="roman">II</span><span class="hood">BKK1</span><span class="sub">Leafy streets, galleries, and quiet coffee</span></div>
@@ -292,19 +320,19 @@
             <span class="row-no">04</span>
             <span class="row-name">Sable Gallery</span>
             <span class="row-cat">Gallery</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--c"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-sable-gallery.jpg')"></div></div>
           </div>
           <div class="row" data-cat="food" data-plate="p4" data-caption="The Long Table" data-area="BKK1">
             <span class="row-no">05</span>
             <span class="row-name">The Long Table</span>
             <span class="row-cat">Restaurant</span>
-            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-long-table.jpg')"></div></div>
           </div>
           <div class="row" data-cat="coffee" data-plate="p5" data-caption="Morning Room" data-area="BKK1">
             <span class="row-no">06</span>
             <span class="row-name">Morning Room</span>
             <span class="row-cat">Coffee</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-morning-room.jpg')"></div></div>
           </div>
 
           <div class="divider" data-plate="h2"><span class="roman">III</span><span class="hood">Old Quarter</span><span class="sub">Markets, temples, layered history</span></div>
@@ -313,19 +341,19 @@
             <span class="row-no">07</span>
             <span class="row-name">Market Edge Noodles</span>
             <span class="row-cat">Food stall</span>
-            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-market-noodles.jpg')"></div></div>
           </div>
           <div class="row" data-cat="craft" data-plate="p7" data-caption="The Tailor&rsquo;s Corner" data-area="Old Quarter">
             <span class="row-no">08</span>
             <span class="row-name">The Tailor&rsquo;s Corner</span>
             <span class="row-cat">Craft</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-tailors-corner.jpg')"></div></div>
           </div>
           <div class="row" data-cat="culture" data-plate="p8" data-caption="Lotus &amp; Incense" data-area="Old Quarter">
             <span class="row-no">09</span>
             <span class="row-name">Lotus &amp; Incense</span>
             <span class="row-cat">Heritage</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--d"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-lotus-incense.jpg')"></div></div>
           </div>
 
           <div class="divider" data-plate="h3"><span class="roman">IV</span><span class="hood">Tuol Tompoung</span><span class="sub">Workshops around the Russian Market</span></div>
@@ -334,41 +362,41 @@
             <span class="row-no">10</span>
             <span class="row-name">Workshop Row</span>
             <span class="row-cat">Design</span>
-            <div class="row-plate-wrap"><div class="row-plate plate"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-workshop-row.jpg')"></div></div>
           </div>
           <div class="row" data-cat="craft" data-plate="p10" data-caption="Weave House" data-area="Tuol Tompoung">
             <span class="row-no">11</span>
             <span class="row-name">Weave House</span>
             <span class="row-cat">Textiles</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--b"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-weave-house.jpg')"></div></div>
           </div>
           <div class="row" data-cat="culture" data-plate="p11" data-caption="Back Alley Records" data-area="Tuol Tompoung">
             <span class="row-no">12</span>
             <span class="row-name">Back Alley Records</span>
             <span class="row-cat">Music</span>
-            <div class="row-plate-wrap"><div class="row-plate plate plate--e"></div></div>
+            <div class="row-plate-wrap"><div class="row-plate plate" style="background-image:url('assets/images/p-back-alley-records.jpg')"></div></div>
           </div>
 
         </div>
 
         <div class="frame-col">
           <div class="frame" id="frame">
-            <div class="frame-plate plate" data-plate-id="p0"></div>
-            <div class="frame-plate plate plate--c" data-plate-id="p1"></div>
-            <div class="frame-plate plate plate--b" data-plate-id="p2"></div>
-            <div class="frame-plate plate plate--c" data-plate-id="p3"></div>
-            <div class="frame-plate plate" data-plate-id="p4"></div>
-            <div class="frame-plate plate plate--b" data-plate-id="p5"></div>
-            <div class="frame-plate plate" data-plate-id="p6"></div>
-            <div class="frame-plate plate plate--b" data-plate-id="p7"></div>
-            <div class="frame-plate plate plate--d" data-plate-id="p8"></div>
-            <div class="frame-plate plate" data-plate-id="p9"></div>
-            <div class="frame-plate plate plate--b" data-plate-id="p10"></div>
-            <div class="frame-plate plate plate--e" data-plate-id="p11"></div>
-            <div class="frame-plate plate plate--d" data-plate-id="h0"></div>
-            <div class="frame-plate plate plate--c" data-plate-id="h1"></div>
-            <div class="frame-plate plate plate--d" data-plate-id="h2"></div>
-            <div class="frame-plate plate plate--e" data-plate-id="h3"></div>
+            <div class="frame-plate plate" data-plate-id="p0" style="background-image:url('assets/images/p-colonial-doorway.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p1" style="background-image:url('assets/images/p-quay-no9.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p2" style="background-image:url('assets/images/p-print-salt.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p3" style="background-image:url('assets/images/p-sable-gallery.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p4" style="background-image:url('assets/images/p-long-table.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p5" style="background-image:url('assets/images/p-morning-room.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p6" style="background-image:url('assets/images/p-market-noodles.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p7" style="background-image:url('assets/images/p-tailors-corner.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p8" style="background-image:url('assets/images/p-lotus-incense.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p9" style="background-image:url('assets/images/p-workshop-row.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p10" style="background-image:url('assets/images/p-weave-house.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="p11" style="background-image:url('assets/images/p-back-alley-records.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="h0" style="background-image:url('assets/images/hood-riverside.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="h1" style="background-image:url('assets/images/hood-bkk1.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="h2" style="background-image:url('assets/images/hood-old-quarter.jpg')"></div>
+            <div class="frame-plate plate" data-plate-id="h3" style="background-image:url('assets/images/hood-tuol-tompoung.jpg')"></div>
             <div class="frame-caption" id="frameCaption">A Colonial Doorway<span class="area">Riverside</span></div>
           </div>
         </div>
