@@ -1,0 +1,302 @@
+<meta charset="utf-8">
+<title>Two Screenings, Ten Years Apart — paperback</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f1e8;
+    --paper-deep:#ece5d4;
+    --ink:#15140f;
+    --ink-soft:#57534a;
+    --rule:#d8d0bc;
+    --mark:#7c2c1f;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--paper)}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:"Libre Baskerville","Baskerville Old Face",Baskerville,Georgia,serif}
+  .eyebrow{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+
+  header.mast{
+    position:fixed; top:0; left:0; right:0; z-index:80;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    mix-blend-mode:difference;
+  }
+  .mast-word{font-weight:700; font-size:1rem; letter-spacing:-0.01em; color:#fff}
+  .mast-nav{display:flex; gap:clamp(18px,3vw,30px)}
+  .mast-nav a{font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#fff}
+
+  /* ---------------- opening ---------------- */
+  .opening{padding:clamp(110px,16vh,180px) clamp(20px,6vw,64px) clamp(30px,5vh,56px)}
+  .opening-inner{max-width:1100px; margin:0 auto}
+  .kicker-row{display:flex; align-items:center; gap:16px; margin-bottom:28px; flex-wrap:wrap}
+  .kicker-row .rule{flex:1; min-width:24px; height:1px; background:var(--rule)}
+  .kicker-row .back{font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--ink-soft)}
+  .title{
+    font-weight:700;
+    font-size:clamp(2.4rem, 6.4vw, 5.4rem);
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    max-width:17ch;
+    color:var(--ink);
+  }
+  .title em{font-style:italic; font-family:"Libre Baskerville",Georgia,serif; font-weight:400}
+  .deck{margin-top:24px; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.55; color:var(--ink-soft); max-width:58ch}
+  .byline{margin-top:26px; display:flex; gap:24px; flex-wrap:wrap; align-items:baseline}
+  .byline .who{font-size:0.95rem}
+  .byline .meta{font-size:0.8rem; color:var(--ink-soft)}
+
+  /* ---------------- archival stub ---------------- */
+  .stub{
+    margin:clamp(36px,6vh,56px) auto 0; max-width:1100px;
+    border:1px solid var(--ink); border-radius:2px;
+    display:grid; grid-template-columns:1fr auto;
+    background:var(--paper-deep);
+    opacity:0; transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .stub.in{opacity:1; transform:translateY(0)}
+  .stub-main{padding:22px clamp(20px,4vw,32px); display:flex; flex-wrap:wrap; gap:clamp(20px,4vw,48px)}
+  .stub-field{display:flex; flex-direction:column; gap:4px}
+  .stub-field .k{font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft)}
+  .stub-field .v{font-size:0.95rem; font-variant-numeric:tabular-nums}
+  .stub-admit{
+    border-left:1px dashed var(--ink);
+    padding:22px clamp(18px,3vw,28px);
+    display:flex; align-items:center; justify-content:center;
+    writing-mode:vertical-rl; text-orientation:mixed;
+    font-size:0.66rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-soft);
+  }
+
+  /* ---------------- article body ---------------- */
+  article{padding:0 clamp(20px,6vw,64px) clamp(70px,11vh,120px)}
+  .col{max-width:640px; margin:0 auto}
+
+  .lede{font-size:clamp(1.15rem,2vw,1.35rem); line-height:1.6; margin-top:clamp(48px,8vh,88px); margin-bottom:8px}
+  .lede::first-letter{
+    font-family:"Libre Baskerville",Georgia,serif;
+    float:left; font-size:3.6em; line-height:0.85; font-weight:700;
+    margin:0.03em 0.09em 0 0;
+  }
+
+  .body-block{padding:30px 0 6px}
+  .body-block p{font-size:1.05rem; line-height:1.75; color:#1c1a15; margin-bottom:22px; max-width:64ch}
+  .body-block p:last-child{margin-bottom:0}
+
+  .section-head{margin:clamp(56px,9vh,96px) 0 8px; display:flex; align-items:baseline; gap:16px}
+  .section-head h2{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:clamp(1.5rem,3vw,2rem)}
+
+  blockquote.pull{
+    margin:clamp(52px,8vh,92px) 0; padding:0 clamp(0px,4vw,40px);
+    font-family:"Libre Baskerville",Georgia,serif;
+    font-style:italic; font-size:clamp(1.4rem,3vw,1.9rem); line-height:1.4;
+    text-wrap:balance;
+    border-left:2px solid var(--mark); padding-left:28px;
+  }
+  blockquote.pull cite{display:block; margin-top:16px; font-style:normal; font-family:"Helvetica Neue",sans-serif;
+    font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft)}
+
+  /* ---------------- two nights (comparison rows) ---------------- */
+  .two-nights{margin:clamp(28px,5vh,44px) 0}
+  .night-row{
+    display:grid; grid-template-columns:80px 1fr; gap:20px;
+    padding:26px 0; border-top:1px solid var(--rule);
+    opacity:0; transform:translateY(14px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .night-row.in{opacity:1; transform:translateY(0)}
+  .two-nights .night-row:last-child{border-bottom:1px solid var(--rule)}
+  .night-year{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:1.6rem; color:var(--ink-soft); padding-top:2px}
+  .night-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 16px; margin-bottom:10px}
+  .night-title{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:clamp(1.15rem,2vw,1.45rem)}
+  .night-title a{border-bottom:1px solid var(--rule)}
+  .night-title a:hover{border-bottom-color:var(--mark)}
+  .night-meta{font-size:0.78rem; color:var(--ink-soft)}
+  .night-row p{font-size:0.98rem; line-height:1.65; color:#1c1a15; max-width:60ch}
+
+  .close-line{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:clamp(1.3rem,2.6vw,1.7rem); line-height:1.55; margin-top:clamp(40px,7vh,72px);
+    max-width:40ch;
+  }
+
+  /* ---------------- sources ---------------- */
+  .sources{border-top:1px solid var(--rule); margin-top:clamp(56px,9vh,96px); padding-top:clamp(28px,5vh,40px)}
+  .sources h3{font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:18px}
+  .sources ol{list-style:none; display:flex; flex-direction:column; gap:9px}
+  .sources li{font-size:0.82rem; color:var(--ink-soft); line-height:1.5}
+  .sources li a{color:var(--ink); border-bottom:1px solid var(--rule)}
+  .sources li a:hover{border-bottom-color:var(--mark)}
+
+  /* ---------------- return ---------------- */
+  .return{
+    border-top:1px solid var(--rule); margin-top:clamp(64px,10vh,120px);
+    padding:clamp(48px,8vh,88px) clamp(20px,6vw,64px) clamp(60px,9vh,100px);
+  }
+  .return-inner{max-width:1100px; margin:0 auto}
+  .return h2{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:clamp(1.7rem,3.4vw,2.4rem); max-width:16ch; margin-bottom:28px;
+  }
+  .return-links{display:flex; gap:clamp(24px,4vw,48px); flex-wrap:wrap; margin-bottom:44px}
+  .return-links a{font-size:0.95rem; border-bottom:1px solid var(--ink-soft); padding-bottom:2px}
+  .also-in{display:flex; flex-wrap:wrap; gap:10px 28px; font-size:0.85rem; color:var(--ink-soft)}
+  .also-in a{color:var(--ink)}
+  .also-in a:hover{text-decoration:underline; text-decoration-color:var(--mark)}
+  .also-in span.sep{color:var(--rule)}
+
+  @media (prefers-reduced-motion:reduce){
+    .stub, .night-row{transition:none; opacity:1 !important; transform:none !important}
+  }
+
+  @media (max-width:760px){
+    .opening{padding-top:96px}
+    .title{max-width:none; font-size:clamp(2.1rem,9vw,3rem)}
+    .stub{grid-template-columns:1fr}
+    .stub-admit{border-left:none; border-top:1px dashed var(--ink); writing-mode:horizontal-tb; padding:14px 20px}
+    .night-row{grid-template-columns:44px 1fr}
+    blockquote.pull{padding-left:18px; font-size:1.3rem}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+
+<header class="mast">
+  <a href="../index.html" class="mast-word">paperback</a>
+  <nav class="mast-nav">
+    <a href="../index.html#walk">Index</a>
+    <a href="../index.html#map">Map</a>
+  </nav>
+</header>
+
+<main>
+  <section class="opening">
+    <div class="opening-inner">
+      <div class="kicker-row">
+        <span class="eyebrow">Field Note &mdash; 03 &middot; Cinema</span>
+        <span class="rule"></span>
+        <a href="../index.html" class="back">&larr; Back to the city</a>
+      </div>
+      <h1 class="title">Two Screenings, <em>Ten Years Apart</em></h1>
+      <p class="deck">In 2015, Bophana Center gave one night to a documentary about a poet deported to a country he'd never lived in. In 2026, Meta House gave one night to five Cambodian filmmakers' first films. Different rooms, same instinct.</p>
+      <div class="byline">
+        <span class="who serif" style="font-style:italic">Found in paperback's own archive, verified against public sources.</span>
+        <span class="meta">6 min read &middot; August 2026</span>
+      </div>
+
+      <div class="stub" id="stub">
+        <div class="stub-main">
+          <div class="stub-field"><span class="k">Screening</span><span class="v">"Cambodian Son" &mdash; Japanese subtitles</span></div>
+          <div class="stub-field"><span class="k">Venue</span><span class="v">Bophana Center</span></div>
+          <div class="stub-field"><span class="k">Date</span><span class="v">Thu 9 Jul 2015</span></div>
+          <div class="stub-field"><span class="k">Doors</span><span class="v">6:30 PM</span></div>
+        </div>
+        <div class="stub-admit">Archival Record</div>
+      </div>
+    </div>
+  </section>
+
+  <article>
+    <div class="col">
+      <p class="lede">We went looking through paperback's old Facebook posts for this site's rebuild, and one from July 2015 stopped us: a one-night, Japanese-subtitled screening of a documentary called <em class="serif">Cambodian Son</em>, at a venue called Bophana Center, twenty minutes' walk from where Anti&#8209;Archive's short film night would happen at Meta House eleven years later. We hadn't set out to write about Cambodian cinema twice. The city, it turns out, had already made that decision for us.</p>
+
+      <div class="body-block">
+        <p><em class="serif">Cambodian Son</em> is a 2014 documentary, directed by the Japan-born, Cambodia-based filmmaker Masahiro Sugano, about the poet Kosal Khiev. Khiev was born in 1980 in the Khao-I-Dang refugee camp on the Thai border and grew up in Santa Ana, California. At sixteen he was convicted of attempted murder and served fourteen years, including eighteen months in solitary confinement at New Folsom State Prison, where he began writing poetry. In 2011, on release, the United States deported him to Cambodia &mdash; a country he had never lived in.</p>
+        <p>In Phnom Penh he met Sugano and the performance artist Anida Yoeu Ali, who together run the independent media lab Studio Revolt, founded in the city in 2011. The following year, selected from six thousand nominees, Khiev represented Cambodia as a poet at the London 2012 Cultural Olympiad; his filmed performance <em class="serif">Why I Write</em> later won Best Poem Performance on Film at the Berlin Zebra Poetry Film Festival. <em class="serif">Cambodian Son</em> follows him through that period &mdash; between a family in California he's barred from visiting and a country he's required to call home.</p>
+      </div>
+
+      <blockquote class="pull">
+        Both nights gave a room to someone working out, in public, what a life adds up to when the place you're from and the place you're required to be aren't the same place.
+      </blockquote>
+
+      <div class="body-block">
+        <p>Bophana Center, where the 2015 screening was held, was co-founded in 2006 by the filmmaker Rithy Panh and Ieu Pannakar as an audiovisual archive for Cambodian film heritage &mdash; newsreels, royal cinema, documentaries, anything worth not losing. It's still standing, still screening. Meta House, where Anti&#8209;Archive's programme played in 2026, opened a year later, in 2007, on the same premise from a different angle: give the city's independent artists a room. Between them they've spent close to forty combined years doing a fairly unglamorous job &mdash; not making the films, just making sure there's somewhere in Phnom Penh to show them.</p>
+      </div>
+
+      <div class="section-head">
+        <h2>Two nights</h2>
+      </div>
+
+      <div class="two-nights">
+        <div class="night-row reveal">
+          <span class="night-year">2015</span>
+          <div>
+            <div class="night-head">
+              <span class="night-title">Cambodian Son</span>
+              <span class="night-meta">Bophana Center &middot; one-night screening, Japanese subtitles</span>
+            </div>
+            <p>A documentary about a single deported poet, shown once, to whoever in Phnom Penh could read the subtitles and wanted to sit with the question it was asking.</p>
+          </div>
+        </div>
+        <div class="night-row reveal">
+          <span class="night-year">2026</span>
+          <div>
+            <div class="night-head">
+              <span class="night-title"><a href="anti-archive-short-film-night.html">First Films at Meta House</a></span>
+              <span class="night-meta">Meta House &middot; Anti-Archive Short Film Night</span>
+            </div>
+            <p>Five first or early films by Cambodian directors, shown once, mostly about the distance between what a family expects and what a person decides for themselves.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="body-block">
+        <p>We're not going to claim Phnom Penh's screening rooms are running some coordinated decade-long programme. They aren't. But when a French colonial-era archive center and a German-Cambodian cultural house, working eleven years and a few kilometres apart, both end up giving a single night to someone's account of not quite belonging where they're told to &mdash; that's not nothing either. It's closer to what these two buildings were built to do in the first place.</p>
+      </div>
+
+      <p class="close-line serif">Cambodian Son isn't streaming anywhere we could find. Ask Bophana Center; archives are, after all, the whole point of the building.</p>
+
+      <div class="sources">
+        <h3>Sources</h3>
+        <ol>
+          <li>Wikipedia &mdash; <a href="https://en.wikipedia.org/wiki/Cambodian_Son" target="_blank" rel="noopener">Cambodian Son</a>; <a href="https://en.wikipedia.org/wiki/Kosal_Khiev" target="_blank" rel="noopener">Kosal Khiev</a></li>
+          <li>CAAMFest 2014, film page &mdash; <em>Cambodian Son</em></li>
+          <li>KPBS Public Media, review of <em>Cambodian Son</em> (2 May 2014)</li>
+          <li>American Documentary / PBS &ldquo;America ReFramed&rdquo; &mdash; <em>Cambodian Son</em> episode page</li>
+          <li>University of Washington Bothell, School of IAS news &mdash; &ldquo;Masahiro Sugano Screens 'Cambodian Son' in Four Different Countries&rdquo; (14 Aug 2019)</li>
+          <li>Studio Revolt, &ldquo;About Us&rdquo; (studio-revolt.com &mdash; returning a server error at time of publishing, so left unlinked here)</li>
+          <li>Bophana Center &mdash; <a href="https://bophana.org" target="_blank" rel="noopener">bophana.org</a>; Wikipedia, &ldquo;Bophana Center&rdquo;</li>
+          <li>paperback (Facebook, account paperbackcambodia), original announcement post, 5 Jul 2015 &mdash; the source for the screening's date, venue, and doors time; not independently corroborated elsewhere, and treated here as paperback's own primary record rather than a third-party fact.</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <section class="return">
+    <div class="return-inner">
+      <h2 class="serif">Back to the city.</h2>
+      <div class="return-links">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#walk">Open the full index</a>
+        <a href="../index.html#map">View the map</a>
+      </div>
+      <div class="also-in">
+        <span>Also on paperback:</span>
+        <a href="anti-archive-short-film-night.html">First Films at Meta House</a><span class="sep">/</span>
+        <a href="the-riverside-before-the-heat-arrives.html">The Riverside, Before the Heat Arrives</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) return;
+  var targets = document.querySelectorAll('.reveal, #stub');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
