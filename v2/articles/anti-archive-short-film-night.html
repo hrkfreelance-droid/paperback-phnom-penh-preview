@@ -1,0 +1,346 @@
+<meta charset="utf-8">
+<title>First Films at Meta House — paperback</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --paper:#f5f1e8;
+    --paper-deep:#ece5d4;
+    --ink:#15140f;
+    --ink-soft:#57534a;
+    --rule:#d8d0bc;
+    --mark:#7c2c1f;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--paper)}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:"Libre Baskerville","Baskerville Old Face",Baskerville,Georgia,serif}
+  .eyebrow{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+
+  header.mast{
+    position:fixed; top:0; left:0; right:0; z-index:80;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    mix-blend-mode:difference;
+  }
+  .mast-word{font-weight:700; font-size:1rem; letter-spacing:-0.01em; color:#fff}
+  .mast-nav{display:flex; gap:clamp(18px,3vw,30px)}
+  .mast-nav a{font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:#fff}
+
+  /* ---------------- opening ---------------- */
+  .opening{padding:clamp(110px,16vh,180px) clamp(20px,6vw,64px) clamp(30px,5vh,56px)}
+  .opening-inner{max-width:1100px; margin:0 auto}
+  .kicker-row{display:flex; align-items:center; gap:16px; margin-bottom:28px; flex-wrap:wrap}
+  .kicker-row .rule{flex:1; min-width:24px; height:1px; background:var(--rule)}
+  .kicker-row .back{font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--ink-soft)}
+  .title{
+    font-weight:700;
+    font-size:clamp(2.4rem, 6.4vw, 5.4rem);
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    max-width:16ch;
+    color:var(--ink);
+  }
+  .title em{font-style:italic; font-family:"Libre Baskerville",Georgia,serif; font-weight:400}
+  .deck{margin-top:24px; font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:1.55; color:var(--ink-soft); max-width:56ch}
+  .byline{margin-top:26px; display:flex; gap:24px; flex-wrap:wrap; align-items:baseline}
+  .byline .who{font-size:0.95rem}
+  .byline .meta{font-size:0.8rem; color:var(--ink-soft)}
+
+  /* ---------------- ticket stub ---------------- */
+  .stub{
+    margin:clamp(36px,6vh,56px) auto 0; max-width:1100px;
+    border:1px solid var(--ink); border-radius:2px;
+    display:grid; grid-template-columns:1fr auto;
+    background:var(--paper-deep);
+    opacity:0; transform:translateY(10px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .stub.in{opacity:1; transform:translateY(0)}
+  .stub-main{padding:22px clamp(20px,4vw,32px); display:flex; flex-wrap:wrap; gap:clamp(20px,4vw,48px)}
+  .stub-field{display:flex; flex-direction:column; gap:4px}
+  .stub-field .k{font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft)}
+  .stub-field .v{font-size:0.95rem; font-variant-numeric:tabular-nums}
+  .stub-admit{
+    border-left:1px dashed var(--ink);
+    padding:22px clamp(18px,3vw,28px);
+    display:flex; align-items:center; justify-content:center;
+    writing-mode:vertical-rl; text-orientation:mixed;
+    font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft);
+  }
+
+  /* ---------------- article body ---------------- */
+  article{padding:0 clamp(20px,6vw,64px) clamp(70px,11vh,120px)}
+  .col{max-width:640px; margin:0 auto}
+
+  .lede{font-size:clamp(1.15rem,2vw,1.35rem); line-height:1.6; margin-top:clamp(48px,8vh,88px); margin-bottom:8px}
+  .lede::first-letter{
+    font-family:"Libre Baskerville",Georgia,serif;
+    float:left; font-size:3.6em; line-height:0.85; font-weight:700;
+    margin:0.03em 0.09em 0 0;
+  }
+
+  .body-block{padding:30px 0 6px}
+  .body-block p{font-size:1.05rem; line-height:1.75; color:#1c1a15; margin-bottom:22px; max-width:64ch}
+  .body-block p:last-child{margin-bottom:0}
+
+  .section-head{margin:clamp(56px,9vh,96px) 0 8px; display:flex; align-items:baseline; gap:16px}
+  .section-head h2{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:clamp(1.5rem,3vw,2rem)}
+  .section-head .n{font-size:0.75rem; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+
+  /* ---------------- programme list (this article's visual centerpiece) ---------------- */
+  .programme{margin:clamp(28px,5vh,44px) 0}
+  .prog-row{
+    display:grid; grid-template-columns:44px 1fr; gap:20px;
+    padding:26px 0; border-top:1px solid var(--rule);
+    opacity:0; transform:translateY(14px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .prog-row.in{opacity:1; transform:translateY(0)}
+  .programme .prog-row:last-child{border-bottom:1px solid var(--rule)}
+  .prog-no{font-size:0.78rem; color:var(--ink-soft); font-variant-numeric:tabular-nums; padding-top:4px}
+  .prog-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 16px; margin-bottom:10px}
+  .prog-title{font-family:"Libre Baskerville",Georgia,serif; font-style:italic; font-size:clamp(1.15rem,2vw,1.45rem)}
+  .prog-meta{font-size:0.78rem; color:var(--ink-soft); letter-spacing:0.02em}
+  .prog-row p{font-size:0.98rem; line-height:1.65; color:#1c1a15; max-width:60ch}
+  .prog-note{
+    font-size:0.85rem; color:var(--ink-soft); padding:20px 0 0; max-width:60ch;
+  }
+
+  blockquote.pull{
+    margin:clamp(52px,8vh,92px) 0; padding:0 clamp(0px,4vw,40px);
+    font-family:"Libre Baskerville",Georgia,serif;
+    font-style:italic; font-size:clamp(1.4rem,3vw,1.9rem); line-height:1.4;
+    text-wrap:balance;
+    border-left:2px solid var(--mark); padding-left:28px;
+  }
+  blockquote.pull cite{display:block; margin-top:16px; font-style:normal; font-family:"Helvetica Neue",sans-serif;
+    font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft)}
+
+  .close-line{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:clamp(1.3rem,2.6vw,1.7rem); line-height:1.55; margin-top:clamp(40px,7vh,72px);
+    max-width:38ch;
+  }
+
+  /* ---------------- sources ---------------- */
+  .sources{border-top:1px solid var(--rule); margin-top:clamp(56px,9vh,96px); padding-top:clamp(28px,5vh,40px)}
+  .sources h3{font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:18px}
+  .sources ol{list-style:none; display:flex; flex-direction:column; gap:9px}
+  .sources li{font-size:0.82rem; color:var(--ink-soft); line-height:1.5}
+  .sources li a{color:var(--ink); border-bottom:1px solid var(--rule)}
+  .sources li a:hover{border-bottom-color:var(--mark)}
+
+  /* ---------------- return ---------------- */
+  .return{
+    border-top:1px solid var(--rule); margin-top:clamp(64px,10vh,120px);
+    padding:clamp(48px,8vh,88px) clamp(20px,6vw,64px) clamp(60px,9vh,100px);
+  }
+  .return-inner{max-width:1100px; margin:0 auto}
+  .return h2{
+    font-family:"Libre Baskerville",Georgia,serif; font-style:italic;
+    font-size:clamp(1.7rem,3.4vw,2.4rem); max-width:16ch; margin-bottom:28px;
+  }
+  .return-links{display:flex; gap:clamp(24px,4vw,48px); flex-wrap:wrap; margin-bottom:44px}
+  .return-links a{font-size:0.95rem; border-bottom:1px solid var(--ink-soft); padding-bottom:2px}
+  .also-in{display:flex; flex-wrap:wrap; gap:10px 28px; font-size:0.85rem; color:var(--ink-soft)}
+  .also-in a{color:var(--ink)}
+  .also-in a:hover{text-decoration:underline; text-decoration-color:var(--mark)}
+  .also-in span.sep{color:var(--rule)}
+
+  @media (prefers-reduced-motion:reduce){
+    .stub, .prog-row{transition:none; opacity:1 !important; transform:none !important}
+  }
+
+  @media (max-width:760px){
+    .opening{padding-top:96px}
+    .title{max-width:none; font-size:clamp(2.1rem,9vw,3rem)}
+    .stub{grid-template-columns:1fr}
+    .stub-admit{border-left:none; border-top:1px dashed var(--ink); writing-mode:horizontal-tb; padding:14px 20px}
+    .prog-row{grid-template-columns:32px 1fr}
+    blockquote.pull{padding-left:18px; font-size:1.3rem}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap">
+
+<header class="mast">
+  <a href="../index.html" class="mast-word">paperback</a>
+  <nav class="mast-nav">
+    <a href="../index.html#walk">Index</a>
+    <a href="../index.html#map">Map</a>
+  </nav>
+</header>
+
+<main>
+  <section class="opening">
+    <div class="opening-inner">
+      <div class="kicker-row">
+        <span class="eyebrow">Field Note &mdash; 02 &middot; Cinema</span>
+        <span class="rule"></span>
+        <a href="../index.html" class="back">&larr; Back to the city</a>
+      </div>
+      <h1 class="title">First Films <em>at Meta House</em></h1>
+      <p class="deck">Notes on the short films Anti&#8209;Archive brought to Meta House this August &mdash; and the pattern that runs through them: mostly first films, mostly about the gap between what family expects and what you actually want.</p>
+      <div class="byline">
+        <span class="who serif" style="font-style:italic">Researched and written after the fact, from public sources.</span>
+        <span class="meta">7 min read &middot; August 2026</span>
+      </div>
+
+      <div class="stub" id="stub">
+        <div class="stub-main">
+          <div class="stub-field"><span class="k">Programme</span><span class="v">Anti&#8209;Archive Short Film Night</span></div>
+          <div class="stub-field"><span class="k">Venue</span><span class="v">Meta House &middot; #48, St. 228</span></div>
+          <div class="stub-field"><span class="k">Date</span><span class="v">Thu 20 Aug 2026</span></div>
+          <div class="stub-field"><span class="k">Time</span><span class="v">7:30 PM</span></div>
+          <div class="stub-field"><span class="k">Admission</span><span class="v">$5</span></div>
+        </div>
+        <div class="stub-admit">Admit One</div>
+      </div>
+    </div>
+  </section>
+
+  <article>
+    <div class="col">
+      <p class="lede">The programme was gone by the time we sat down to write this. That's on purpose. paperback isn't in the business of telling you what's on tonight &mdash; by the time you're reading this, the projector at Meta House is off and the six short films that filled Street 228 for one Thursday evening are back on hard drives, waiting for the next festival to say yes. What's left is the more interesting question: what does a single night of Cambodian short film, chosen by the people who help make it, actually add up to?</p>
+
+      <div class="body-block">
+        <p>Anti&#8209;Archive was founded in Phnom Penh in 2014 by the filmmakers Davy Chou, Steve Chen, and Kavich Neang &mdash; joined later as partners by Daniel Mattes and Park Sungho &mdash; specifically because that structure didn't exist yet. Cambodia's film industry had spent decades being rebuilt from almost nothing after the Khmer Rouge years gutted it, and there was no reliable production company for a new generation of Cambodian directors to make a first film through. Anti&#8209;Archive produces and co-produces fiction and documentary work, mostly by first-time Cambodian filmmakers, alongside international productions shot in the region. The name is a small provocation: an archive is a record of what someone decided was worth keeping. Anti&#8209;Archive is more interested in who gets to make that decision next.</p>
+      </div>
+
+      <div class="section-head">
+        <h2>The programme</h2>
+        <span class="n">5 of 6 verified</span>
+      </div>
+      <p style="color:var(--ink-soft); font-size:0.92rem; max-width:60ch">Titles, directors and details below are drawn from official film and festival pages, not the event listing alone &mdash; see Sources. One title on the night's programme couldn't be independently confirmed before publishing; it's noted, not described, at the end of this list.</p>
+    </div>
+
+    <div class="col">
+      <div class="programme" id="programme">
+        <div class="prog-row reveal">
+          <span class="prog-no">01</span>
+          <div>
+            <div class="prog-head">
+              <span class="prog-title">Three Wheels</span>
+              <span class="prog-meta">Kavich Neang &middot; 2015 &middot; 20 min</span>
+            </div>
+            <p>A tuk-tuk driver spends his nights carrying the city's evenings around while an old memory keeps surfacing &mdash; a marriage from the Khmer Rouge years that was never his to choose. One of Neang's first significant shorts, made before the features that later took him to Rotterdam and Venice; it premiered at Busan and won the Youth Jury Award in Singapore.</p>
+          </div>
+        </div>
+
+        <div class="prog-row reveal">
+          <span class="prog-no">02</span>
+          <div>
+            <div class="prog-head">
+              <span class="prog-title">California Dreaming</span>
+              <span class="prog-meta">Sreylin Meas &middot; 2019 &middot; 16 min</span>
+            </div>
+            <p>Two women from different worlds meet at a resort on the coast and find, briefly, a way out of their own lives. Meas's directorial debut, made through Anti&#8209;Archive's Echoes from Tomorrow programme for first-time Cambodian filmmakers.</p>
+          </div>
+        </div>
+
+        <div class="prog-row reveal">
+          <span class="prog-no">03</span>
+          <div>
+            <div class="prog-head">
+              <span class="prog-title">Happy Ending</span>
+              <span class="prog-meta">&Eacute;lodie Yung &middot; 2023</span>
+            </div>
+            <p>A Cambodian woman carrying a secret takes work in an illicit massage parlour in the United States, trying to build something better for the family she left behind. Better known as an actor &mdash; Marvel's Elektra, among other roles &mdash; the French-Cambodian Yung directs here for the first time.</p>
+          </div>
+        </div>
+
+        <div class="prog-row reveal">
+          <span class="prog-no">04</span>
+          <div>
+            <div class="prog-head">
+              <span class="prog-title">Fresh as Daisy</span>
+              <span class="prog-meta">Socheata Van &middot; 2025 &middot; 13 min</span>
+            </div>
+            <p>Two young women raised in conservative households in the same Phnom Penh neighbourhood hold onto their friendship as they try to choose their own lives. Van's first fiction film, developed at the Purin Pictures Short Film Camp; it premiered at Singapore International Film Festival 2025, where it was also nominated for Best Performance.</p>
+          </div>
+        </div>
+
+        <div class="prog-row reveal">
+          <span class="prog-no">05</span>
+          <div>
+            <div class="prog-head">
+              <span class="prog-title">Grandma Nai Who Played Favorites</span>
+              <span class="prog-meta">Chheangkea &middot; 2025 &middot; 19 min</span>
+            </div>
+            <p>On Tomb Sweeping Day, a dead grandmother sneaks out of a peaceful afterlife after overhearing that her queer grandson is about to get engaged. Chheangkea's NYU thesis film premiered at Sundance 2025, where it won a Short Film Award &mdash; a deadpan comedy built over a real question about who gets welcomed into a family's account of itself, and who doesn't.</p>
+          </div>
+        </div>
+
+        <p class="prog-note">A sixth title, <em class="serif">Parade</em>, credited to Davy Chou, was also listed on the evening's programme. We could not independently confirm its production details before publishing, so it isn't described above.</p>
+      </div>
+    </div>
+
+    <div class="col">
+      <blockquote class="pull">
+        Four of these five are first films &mdash; a director's first fiction short, or first film, full stop. The fifth was made early, too.
+      </blockquote>
+
+      <div class="body-block">
+        <p>That's not really a coincidence; it's close to the job Anti&#8209;Archive gave itself in 2014. What's less obviously by design is the shape underneath the plots. A queer grandson waiting to find out if his family will show up. Two women who owe their households more compliance than they're willing to give. A woman keeping a secret from the family she's providing for. A marriage nobody in it chose. On this particular Thursday, Cambodian cinema kept circling the same fault line &mdash; inherited obligation on one side, a person's own account of their life on the other &mdash; and mostly declined to resolve it either way.</p>
+        <p>The venue is part of that story too. Meta House opened in 2007 in a private villa on Street 228, founded by the German filmmaker and arts activist Nico Mesterharm; it now runs a gallery, an open-air stage, a small library and a screening room alongside a Goethe-Institut language school. For almost two decades it has done the unglamorous work of giving Cambodian artists a room to show work in, at a point when the country's contemporary art and film scene was rebuilding itself nearly from zero. A short film night here isn't really an event in the usual sense. It's closer to routine maintenance on a piece of infrastructure the city still needs.</p>
+      </div>
+
+      <p class="close-line">None of the five films above resolve their opening question. That might be the most honest way to end a programme about deciding what's worth keeping.</p>
+
+      <div class="sources">
+        <h3>Sources</h3>
+        <ol>
+          <li>Anti&#8209;Archive, &ldquo;About Us&rdquo; &mdash; <a href="https://www.antiarchive.com/about.html" target="_blank" rel="noopener">antiarchive.com/about.html</a></li>
+          <li>Anti&#8209;Archive, &ldquo;Fresh as Daisy&rdquo; &mdash; <a href="https://www.antiarchive.com/freshasdaisy.html" target="_blank" rel="noopener">antiarchive.com/freshasdaisy.html</a></li>
+          <li>Anti&#8209;Archive, &ldquo;Grandma Nai Who Played Favorites&rdquo; &mdash; <a href="https://www.antiarchive.com/grandmanai.html" target="_blank" rel="noopener">antiarchive.com/grandmanai.html</a></li>
+          <li>Anti&#8209;Archive, &ldquo;Echoes From Tomorrow&rdquo; &mdash; <a href="https://www.antiarchive.com/echoesfromtomorrow.html" target="_blank" rel="noopener">antiarchive.com/echoesfromtomorrow.html</a></li>
+          <li>Meta House, &ldquo;About Us&rdquo; &mdash; <a href="https://meta-house.com/about-us/" target="_blank" rel="noopener">meta-house.com/about-us</a></li>
+          <li>AllEvents.in, event listing for Anti&#8209;Archive Short Film Night, Meta House, 20 Aug 2026</li>
+          <li>IMDb &mdash; <em>Three Wheels</em> (2015), <em>Happy Ending</em> (2023), <em>Grandma Nai Who Played Favorites</em> (2025)</li>
+          <li>Letterboxd &mdash; <em>California Dreaming</em> (2019), <em>Happy Ending</em> (2023), <em>Grandma Nai Who Played Favorites</em> (2025)</li>
+          <li>Sundance Institute, 2025 Short Film Award programme &mdash; <em>Grandma Nai Who Played Favorites</em></li>
+          <li>Singapore International Film Festival, film page &mdash; <em>Fresh as Daisy</em></li>
+          <li>Asian Movie Pulse, review of <em>California Dreaming</em> (2020)</li>
+          <li>Wikipedia &mdash; Davy Chou; &Eacute;lodie Yung</li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <section class="return">
+    <div class="return-inner">
+      <h2 class="serif">Back to the city.</h2>
+      <div class="return-links">
+        <a href="../index.html">Home</a>
+        <a href="../index.html#walk">Open the full index</a>
+        <a href="../index.html#map">View the map</a>
+      </div>
+      <div class="also-in">
+        <span>Also on paperback:</span>
+        <a href="the-riverside-before-the-heat-arrives.html">The Riverside, Before the Heat Arrives</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) return;
+  var targets = document.querySelectorAll('.reveal, #stub');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  targets.forEach(function(t){ io.observe(t); });
+})();
+</script>

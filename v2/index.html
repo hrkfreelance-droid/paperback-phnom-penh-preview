@@ -103,6 +103,13 @@
   .feature-plate{overflow:hidden}
   .feature-plate img,.feature-plate{transition:filter .5s ease}
   .feature-link:hover .feature-plate{filter:saturate(1) contrast(1.02) brightness(1.02)}
+  .feature-plate.no-image{
+    background:var(--ink); display:flex; align-items:center; justify-content:center;
+  }
+  .feature-plate-label{
+    color:var(--paper); font-style:italic; font-size:clamp(1.8rem,4vw,3.2rem);
+    writing-mode:vertical-rl; transform:rotate(180deg); letter-spacing:0.02em;
+  }
   .feature-copy{
     display:flex; flex-direction:column; justify-content:center;
     padding:clamp(28px,5vw,72px);
@@ -221,6 +228,7 @@
 
     .feature-link{grid-template-columns:1fr; min-height:auto}
     .feature-plate{aspect-ratio:4/3}
+    .feature-plate-label{writing-mode:horizontal-tb; transform:none; font-size:1.8rem}
     .feature-copy{padding:28px 20px}
     .feature-copy p{max-width:none}
 
@@ -263,13 +271,15 @@
     </div>
   </section>
 
-  <section class="feature-teaser">
-    <a href="article.html" class="feature-link">
-      <div class="feature-plate plate" style="background-image:url('assets/images/hood-riverside.jpg')"></div>
+  <section class="feature-teaser" id="featureTeaser">
+    <a href="articles/anti-archive-short-film-night.html" class="feature-link" id="featureLink">
+      <div class="feature-plate no-image" id="featurePlate">
+        <span class="feature-plate-label serif" id="featurePlateLabel">Cinema</span>
+      </div>
       <div class="feature-copy">
-        <span class="eyebrow">Field Note &mdash; 01 &middot; Riverside</span>
-        <h2 class="serif">The Riverside,<br>Before the Heat Arrives</h2>
-        <p>Three mornings along the Tonle Sap, before the tour groups and the heat arrive.</p>
+        <span class="eyebrow" id="featureEyebrow">Field Note &mdash; 02 &middot; Cinema</span>
+        <h2 class="serif" id="featureTitle">First Films at Meta House</h2>
+        <p id="featureDeck">Notes on the short films Anti&#8209;Archive brought to Meta House this August &mdash; and the pattern that runs through them.</p>
         <span class="feature-cta">Read the field note <span class="arrow">&rarr;</span></span>
       </div>
     </a>
@@ -553,5 +563,25 @@
       computeFocus();
     });
   });
+
+  /* ---------- featured field note, driven by articles.json ---------- */
+  fetch('articles.json').then(function(r){ return r.json(); }).then(function(list){
+    var featured = list && list[0];
+    if(!featured) return;
+    document.getElementById('featureLink').setAttribute('href', featured.href);
+    document.getElementById('featureEyebrow').textContent = 'Field Note — 02 · ' + featured.category;
+    document.getElementById('featureTitle').textContent = featured.title;
+    document.getElementById('featureDeck').textContent = featured.deck;
+    var plate = document.getElementById('featurePlate');
+    var label = document.getElementById('featurePlateLabel');
+    if(featured.cover){
+      plate.classList.remove('no-image');
+      plate.classList.add('plate');
+      plate.style.backgroundImage = "url('" + featured.cover + "')";
+      if(label) label.remove();
+    } else if(label){
+      label.textContent = featured.category;
+    }
+  }).catch(function(){ /* keep the static fallback already in the markup */ });
 })();
 </script>
