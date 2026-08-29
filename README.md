@@ -7,6 +7,7 @@ https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/
 Direct links:
 - V1 (editorial magazine layout): https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v1.html
 - V2 TOP page (scroll-driven interaction): https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v2/index.html
+- V4 TOP page (V2 with the motion reworked): https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v4/index.html
 - V2 article — "First Films at Meta House" (Anti-Archive Short Film Night): https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v2/articles/anti-archive-short-film-night.html
 - V2 article — "The Riverside, Before the Heat Arrives": https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v2/articles/the-riverside-before-the-heat-arrives.html
 

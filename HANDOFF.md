@@ -1,10 +1,17 @@
 # HANDOFF
 
-## v2 → v3 motion polish (TOP page only)
+## V4 — モーション調整（TOPページのみ）
 
-`v2/index.html` のみ変更。コピー・構成・Index の並び・Field Note の中身は一切変更なし。
+`v4/index.html` として追加。**V2 は変更前の比較対象として手つかずで残してある。**
+コピー・構成・Index の並び・Field Note の中身は一切変更なし。
 記事ページ (`v2/articles/*.html`) は未着手 — 同じ原則で後から横展開できるよう、
 クラス名と DOM 構造は維持している。
+
+写真（8.9MB）と記事ページは複製せず `../v2/assets/images/` `../v2/articles/` を参照する。
+V4 で変更があるのは `index.html` 1枚だけで、差分はそこに閉じている。
+
+- V4: https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v4/index.html
+- V2（変更前）: https://hrkfreelance-droid.github.io/paperback-phnom-penh-preview/v2/index.html
 
 方針は「動きを足す」ではなく「今ある動きの質を上げる」。
 
